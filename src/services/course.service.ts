@@ -5,6 +5,7 @@ import {
    TUpdateCourseData,
 } from "../interfaces/course.interface";
 
+// Etapa final
 export class CourseService {
    create(data: TCreateCourseData) {
       const now = new Date();
@@ -28,28 +29,16 @@ export class CourseService {
       return filteredCourseList;
    }
 
-   getOne(id: number) {
-      const course = courseDatabase.find((course) => course.id === id);
-
-      if (!course) {
-         throw new Error("Course not found.");
-      }
-
+   getOne(course: ICourse) {     
       return course;
    }
 
-   update(id: number, data: TUpdateCourseData) {
-      const currentCourse = courseDatabase.find((course) => course.id === id);
-
-      if (!currentCourse) {
-         throw new Error("Course not found.");
-      }
-
+   update(currentCourse: ICourse, data: TUpdateCourseData) {  
       const now = new Date();
 
       const updateCourse: ICourse = { ...currentCourse, ...data, updatedAt: now };
 
-      const index = courseDatabase.findIndex((course) => course.id === id);
+      const index = courseDatabase.findIndex((course) => course.id === currentCourse.id);
 
       courseDatabase.splice(index, 1, updateCourse);
 
@@ -58,10 +47,6 @@ export class CourseService {
 
    delete(id: number) {
       const index = courseDatabase.findIndex((course) => course.id === id);
-
-      if (index === -1) {
-         throw new Error("Course not found.");
-      }
 
       courseDatabase.splice(index, 1);
 

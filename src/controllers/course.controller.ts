@@ -20,16 +20,18 @@ export class CourseController {
 
    getOne(request: Request, response: Response) {
       const courseService = new CourseService();
+      const existingCourse = response.locals.course;
 
-      const course = courseService.getOne(Number(request.params.id));
+      const course = courseService.getOne(existingCourse);
 
       return response.status(200).json(course);
    }
 
    update(request: Request, response: Response) {
       const courseService = new CourseService();
+      const existingCourse = response.locals.course;
 
-      const course = courseService.update(Number(request.params.id), request.body);
+      const course = courseService.update(existingCourse, request.body);
 
       return response.status(200).json(course);
    }
