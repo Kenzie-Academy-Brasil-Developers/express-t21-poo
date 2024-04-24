@@ -13,7 +13,15 @@ export class CourseController {
    getMany(request: Request, response: Response) {
       const courseService = new CourseService();
 
-      const courses = courseService.getMany(request.query.search as string);
+      const page = request.query.page;
+
+      const orderBy = request.query.orderBy;
+
+      const courses = courseService.getMany(
+         request.query.search as string,
+         page ? Number(page) : undefined,
+         orderBy as "ASC" | "DESC"
+      );
 
       return response.status(200).json(courses);
    }
